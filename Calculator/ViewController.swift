@@ -15,6 +15,26 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    @IBOutlet weak var outputStream: UILabel!
+    @IBOutlet weak var answerBox: UILabel!
+    
+    
+    
+    @IBAction func buttonPress(sender: UIButton) {
+        var buttonText = sender.titleLabel?.text
+        if let text = outputStream.text {
+            outputStream.text = text + buttonText!
+        }else{
+            outputStream.text = buttonText!
+        }
+    }
+
+    @IBAction func buttonSeven(sender: AnyObject) {
+    }
+    @IBAction func buttonEight(sender: AnyObject) {
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
