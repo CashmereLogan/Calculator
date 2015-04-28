@@ -19,7 +19,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var answerBox: UILabel!
     
     
-    var lastAnswer = 0
+    var stringArray: [String] = []
+    var answerInt = 0
     @IBAction func buttonPress(sender: UIButton) {
         var buttonText = sender.titleLabel?.text
         var empty = outputStream.text?.isEmpty
@@ -32,16 +33,13 @@ class ViewController: UIViewController {
         
         //let operatorArray: [String] = ["+", "-", "*", "/"]
         let operators = NSCharacterSet(charactersInString: "+,-/")
-        var stringArray: [String] = []
         
         let nsString = outputStream.text! as NSString
         stringArray = nsString.componentsSeparatedByCharactersInSet(operators) as! [String]
-    
-        var answerInt = 0
+        
         for x in stringArray{
             if let int = x.toInt() {
                 answerInt += int
-                lastAnswer = answerInt
             }
         }
         answerBox.text = "\(answerInt)"
@@ -54,8 +52,16 @@ class ViewController: UIViewController {
         if let text = outputStream.text {
             if (empty == false){
                 outputStream.text = dropLast(text)
-                var updatedAnswer = answerBox.text!.toInt()! - lastAnswer
-                answerBox.text = "\(updatedAnswer)"
+                if stringArray.count != 0{
+                    answerInt -= stringArray.last!.toInt()!
+                    stringArray.removeLast()
+                    answerBox.text = "\(answerInt)"
+                }
+                for x in stringArray{
+                    if let int = x.toInt(){
+                        answerInt += int
+                    }
+                }
             }else{
                 outputStream.text = sameText
             }
@@ -63,6 +69,7 @@ class ViewController: UIViewController {
         
     }
     
+   
     
     
     override func didReceiveMemoryWarning() {
