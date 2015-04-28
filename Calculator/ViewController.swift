@@ -28,11 +28,13 @@ class ViewController: UIViewController {
             outputStream.text = buttonText!
         }
     }
-
-    @IBAction func buttonSeven(sender: AnyObject) {
+    
+    @IBAction func backButton(sender: AnyObject) {
+        if let text = outputStream.text {
+            outputStream.text = dropLast(text)
+        }
     }
-    @IBAction func buttonEight(sender: AnyObject) {
-    }
+    
     
     
     override func didReceiveMemoryWarning() {
