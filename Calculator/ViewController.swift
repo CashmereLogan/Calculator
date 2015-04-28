@@ -22,16 +22,31 @@ class ViewController: UIViewController {
     
     @IBAction func buttonPress(sender: UIButton) {
         var buttonText = sender.titleLabel?.text
+        var empty = outputStream.text?.isEmpty
+        var string1 = ""
         if let text = outputStream.text {
             outputStream.text = text + buttonText!
         }else{
             outputStream.text = buttonText!
         }
+        var stringArray = split(outputStream.text!) {$0 == "+" || $0 == "-" || $0 == "/" || $0 == "*"}
+        var answerInt = 0
+        for i in stringArray..<stringArray.endIndex {
+            answerInt += stringArray[i].asInt()
+        }
+        answerBox.text = "\(answerInt)"
+    
     }
     
     @IBAction func backButton(sender: AnyObject) {
+        var sameText = outputStream.text
+        var empty = outputStream.text?.isEmpty
         if let text = outputStream.text {
+            if (empty == false){
             outputStream.text = dropLast(text)
+            }else{
+                outputStream.text = sameText
+            }
         }
     }
     
