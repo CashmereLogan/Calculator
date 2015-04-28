@@ -29,9 +29,21 @@ class ViewController: UIViewController {
         }else{
             outputStream.text = buttonText!
         }
-        var stringArray = split(outputStream.text!) {$0 == "+" || $0 == "-" || $0 == "/" || $0 == "*"}
+        var operatorArray = ["+", "-", "*", "/"]
+        var stringArray = ""
+        for x in outputStream.text!.startIndex..<outputStream.text!.endIndex{
+            //var y = outputStream.text[x]
+            var y = "+"
+            for z in operatorArray.startIndex..<operatorArray.endIndex{
+                if(y == operatorArray[z]){
+                    stringArray = split(outputStream.text!) {$0 == operatorArray[z]}
+                }
+            }
+        }
+    
+        
         var answerInt = 0
-        for i in stringArray..<stringArray.endIndex {
+        for i in stringArray[0]..<stringArray.endIndex{
             answerInt += stringArray[i].asInt()
         }
         answerBox.text = "\(answerInt)"
