@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var answerBox: UILabel!
     
     
-    
+    var lastAnswer = 0
     @IBAction func buttonPress(sender: UIButton) {
         var buttonText = sender.titleLabel?.text
         var empty = outputStream.text?.isEmpty
@@ -29,22 +29,20 @@ class ViewController: UIViewController {
         }else{
             outputStream.text = buttonText!
         }
-        var operatorArray = ["+", "-", "*", "/"]
-        var stringArray = ""
-        for x in outputStream.text!.startIndex..<outputStream.text!.endIndex{
-            //var y = outputStream.text[x]
-            var y = "+"
-            for z in operatorArray.startIndex..<operatorArray.endIndex{
-                if(y == operatorArray[z]){
-                    stringArray = split(outputStream.text!) {$0 == operatorArray[z]}
-                }
-            }
-        }
-    
         
+        //let operatorArray: [String] = ["+", "-", "*", "/"]
+        let operators = NSCharacterSet(charactersInString: "+,-/")
+        var stringArray: [String] = []
+        
+        let nsString = outputStream.text! as NSString
+        stringArray = nsString.componentsSeparatedByCharactersInSet(operators) as! [String]
+    
         var answerInt = 0
-        for i in stringArray[0]..<stringArray.endIndex{
-            answerInt += stringArray[i].asInt()
+        for x in stringArray{
+            if let int = x.toInt() {
+                answerInt += int
+                lastAnswer = answerInt
+            }
         }
         answerBox.text = "\(answerInt)"
     
@@ -55,11 +53,14 @@ class ViewController: UIViewController {
         var empty = outputStream.text?.isEmpty
         if let text = outputStream.text {
             if (empty == false){
-            outputStream.text = dropLast(text)
+                outputStream.text = dropLast(text)
+                var updatedAnswer = answerBox.text!.toInt()! - lastAnswer
+                answerBox.text = "\(updatedAnswer)"
             }else{
                 outputStream.text = sameText
             }
         }
+        
     }
     
     
