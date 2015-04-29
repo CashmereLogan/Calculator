@@ -7,6 +7,7 @@
 //
 
 import UIKit
+let operators = NSCharacterSet(charactersInString: "+,-/")
 
 class ViewController: UIViewController {
 
@@ -32,7 +33,6 @@ class ViewController: UIViewController {
         }
         
         //let operatorArray: [String] = ["+", "-", "*", "/"]
-        let operators = NSCharacterSet(charactersInString: "+,-/")
         
         let nsString = outputStream.text! as NSString
         stringArray = nsString.componentsSeparatedByCharactersInSet(operators) as! [String]
@@ -52,21 +52,29 @@ class ViewController: UIViewController {
         var empty = outputStream.text?.isEmpty
         let nsOutputStream = outputStream.text! as NSString
         let lastIndex = nsOutputStream.length
-        let lastNumber = nsOutputStream.substringFromIndex(lastIndex-1)
+        
         let answerNew = answerBox.text
+        
         if let text = outputStream.text {
-            if (empty == false && ){
+            if (empty == false){
                 outputStream.text = dropLast(text)
-                if stringArray.count != 0{
+                let lastNumber = nsOutputStream.substringFromIndex(lastIndex-1)
+                if (stringArray.count != 0 && lastNumber != "+" && lastNumber != "-" && lastNumber != "/" && lastNumber != "*"){
                     answerInt = answerNew!.toInt()! - lastNumber.toInt()!
                     stringArray.removeLast()
                     answerBox.text = "\(answerInt)"
-                }
-                /*for x in stringArray{
-                    if let int = x.toInt(){
-                        answerInt += int
+                }else{
+                    if(stringArray.count == 1){
+                        outputStream.text = "0"
+                        answerInt = 0
+                        answerBox.text = "\(answerInt)"
+                        stringArray.removeLast()
+                    }else if(stringArray.count == 0){
+                        outputStream.text = ""
+                        answerBox.text = ""
                     }
-                }*/
+                
+                }
             }else{
                 outputStream.text = sameText
             }
