@@ -61,7 +61,6 @@ class ViewController: UIViewController {
                 let lastNumber = nsOutputStream.substringFromIndex(lastIndex-1)
                 if (stringArray.count != 0 && lastNumber != "+" && lastNumber != "-" && lastNumber != "/" && lastNumber != "*"){
                     answerInt = answerNew!.toInt()! - lastNumber.toInt()!
-                    stringArray.removeLast()
                     answerBox.text = "\(answerInt)"
                 }else{
                     if(stringArray.count == 1){
