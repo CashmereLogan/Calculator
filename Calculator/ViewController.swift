@@ -43,25 +43,30 @@ class ViewController: UIViewController {
             }
         }
         answerBox.text = "\(answerInt)"
+        answerInt = 0
     
     }
     
     @IBAction func backButton(sender: AnyObject) {
         var sameText = outputStream.text
         var empty = outputStream.text?.isEmpty
+        let nsOutputStream = outputStream.text! as NSString
+        let lastIndex = nsOutputStream.length
+        let lastNumber = nsOutputStream.substringFromIndex(lastIndex-1)
+        let answerNew = answerBox.text
         if let text = outputStream.text {
-            if (empty == false){
+            if (empty == false && ){
                 outputStream.text = dropLast(text)
                 if stringArray.count != 0{
-                    answerInt -= stringArray.last!.toInt()!
+                    answerInt = answerNew!.toInt()! - lastNumber.toInt()!
                     stringArray.removeLast()
                     answerBox.text = "\(answerInt)"
                 }
-                for x in stringArray{
+                /*for x in stringArray{
                     if let int = x.toInt(){
                         answerInt += int
                     }
-                }
+                }*/
             }else{
                 outputStream.text = sameText
             }
