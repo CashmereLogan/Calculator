@@ -7,7 +7,7 @@
 //
 
 import UIKit
-let operators = NSCharacterSet(charactersInString: "+,-/")
+
 
 class ViewController: UIViewController {
 
@@ -19,22 +19,59 @@ class ViewController: UIViewController {
     @IBOutlet weak var outputStream: UILabel!
     @IBOutlet weak var answerBox: UILabel!
     
+    var stringArray: [String] = []
+    var operatorArray: [String] = []
+    var answerInt = 0
+    let savedAnswerInt = 0
+    let operators = NSCharacterSet(charactersInString: "+,-/")
+    let numbers = NSCharacterSet(charactersInString: "123456789")
+    var opChar = ""
+    
+    func operate(operatorToUse: String, numberToUse: Int){
+        if (operatorToUse == "+"){
+            answerInt += numberToUse
+        }else if (operatorToUse == "-"){
+            answerInt -= numberToUse
+        }else if (operatorToUse == "*"){
+            answerInt *= numberToUse
+        }else if (operatorToUse == "/"){
+            answerInt /= numberToUse
+        }else{
+            answerInt = numberToUse
+        }
+
+    }
+    
     func recalculate() {
         let nsString = outputStream.text! as NSString
         stringArray = nsString.componentsSeparatedByCharactersInSet(operators) as! [String]
+        operatorArray = nsString.componentsSeparatedByCharactersInSet(numbers) as! [String]
+        
+        for x in operatorArray{
+            if (x == "+"){
+                opChar = "+"
+            }else if (x == "-"){
+                opChar = "-"
+            }else if (x == "*"){
+                opChar = "*"
+            }else if (x == "/"){
+                opChar = "/"
+            }
+        }
         
         for x in stringArray{
             if let int = x.toInt() {
-                answerInt += int
+                operate(opChar, numberToUse: x.toInt()!)
+                //answerInt += int
+                //where I need to call calculation
             }
         }
+        
         answerBox.text = "\(answerInt)"
         answerInt = 0
     }
     
-    var stringArray: [String] = []
-    var answerInt = 0
-    let savedAnswerInt = 0
+    
     @IBAction func buttonPress(sender: UIButton) {
         var buttonText = sender.titleLabel?.text
         var empty = outputStream.text?.isEmpty
