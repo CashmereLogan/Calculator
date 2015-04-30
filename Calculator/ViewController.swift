@@ -28,10 +28,11 @@ class ViewController: UIViewController {
     var opChar = ""
     
     func operate(operatorToUse: String, numberToUse: Int){
+        println("numberToUse \(numberToUse)")
         if (operatorToUse == "+"){
             answerInt += numberToUse
         }else if (operatorToUse == "-"){
-            answerInt -= numberToUse
+            answerInt == answerInt - numberToUse
         }else if (operatorToUse == "*"){
             answerInt *= numberToUse
         }else if (operatorToUse == "/"){
@@ -62,6 +63,7 @@ class ViewController: UIViewController {
         for x in stringArray{
             if let int = x.toInt() {
                 operate(opChar, numberToUse: x.toInt()!)
+                //One function gets expression ready, other calculates it based on number added after operator
                 //answerInt += int
                 //where I need to call calculation
             }
