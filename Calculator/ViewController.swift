@@ -19,21 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var outputStream: UILabel!
     @IBOutlet weak var answerBox: UILabel!
     
-    
-    var stringArray: [String] = []
-    var answerInt = 0
-    @IBAction func buttonPress(sender: UIButton) {
-        var buttonText = sender.titleLabel?.text
-        var empty = outputStream.text?.isEmpty
-        var string1 = ""
-        if let text = outputStream.text {
-            outputStream.text = text + buttonText!
-        }else{
-            outputStream.text = buttonText!
-        }
-        
-        //let operatorArray: [String] = ["+", "-", "*", "/"]
-        
+    func recalculate() {
         let nsString = outputStream.text! as NSString
         stringArray = nsString.componentsSeparatedByCharactersInSet(operators) as! [String]
         
@@ -44,6 +30,22 @@ class ViewController: UIViewController {
         }
         answerBox.text = "\(answerInt)"
         answerInt = 0
+    }
+    
+    var stringArray: [String] = []
+    var answerInt = 0
+    let savedAnswerInt = 0
+    @IBAction func buttonPress(sender: UIButton) {
+        var buttonText = sender.titleLabel?.text
+        var empty = outputStream.text?.isEmpty
+        var string1 = ""
+        if let text = outputStream.text {
+            outputStream.text = text + buttonText!
+        }else{
+            outputStream.text = buttonText!
+        }
+        
+        recalculate()
     
     }
     
@@ -53,15 +55,12 @@ class ViewController: UIViewController {
         let nsOutputStream = outputStream.text! as NSString
         let lastIndex = nsOutputStream.length
         
-        let answerNew = answerBox.text
-        
         if let text = outputStream.text {
             if (empty == false){
                 outputStream.text = dropLast(text)
                 let lastNumber = nsOutputStream.substringFromIndex(lastIndex-1)
                 if (stringArray.count != 0 && lastNumber != "+" && lastNumber != "-" && lastNumber != "/" && lastNumber != "*"){
-                    answerInt = answerNew!.toInt()! - lastNumber.toInt()!
-                    answerBox.text = "\(answerInt)"
+                    recalculate()
                 }else{
                     if(stringArray.count == 1){
                         outputStream.text = "0"
