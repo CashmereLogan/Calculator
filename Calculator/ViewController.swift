@@ -19,52 +19,22 @@ class ViewController: UIViewController {
     @IBOutlet weak var outputStream: UILabel!
     @IBOutlet weak var answerBox: UILabel!
     
-    var stringArray: [String] = []
-    var operatorArray: [String] = []
-    var answerInt = 0
-    let savedAnswerInt = 0
-    var op = ""
-    
-    func operate(operatorToUse: String) {
+    func recalculate() {
+        let nsString = outputStream.text! as NSString
+        stringArray = nsString.componentsSeparatedByCharactersInSet(operators) as! [String]
+        
         for x in stringArray{
             if let int = x.toInt() {
-                if (operatorToUse == "-"){
-                    answerInt -= int
-                }else if (operatorToUse == "*"){
-                    answerInt *= int
-                }else if (operatorToUse == "/"){
-                    answerInt /= int
-                }else if (operatorToUse == "+"){
-                    answerInt += int
-                }
+                answerInt += int
             }
         }
         answerBox.text = "\(answerInt)"
         answerInt = 0
     }
     
-    func recalculate() {
-        let nsString = outputStream.text! as NSString
-        stringArray = nsString.componentsSeparatedByCharactersInSet(operators) as! [String]
-        operatorArray = Array(arrayLiteral: outputStream.text!)
-        for x in 0..<operatorArray.count{
-            let opChar = operatorArray[x] as NSString
-            if (opChar == "-"){
-                var op = "-"
-            }
-        }
-        /*for x in stringArray{
-            if let int = x.toInt() {
-                //answerInt += int
-                operate(op)
-            }
-        }*/
-        operate(op)
-        /*answerBox.text = "\(answerInt)"
-        answerInt = 0*/
-    }
-    
- 
+    var stringArray: [String] = []
+    var answerInt = 0
+    let savedAnswerInt = 0
     @IBAction func buttonPress(sender: UIButton) {
         var buttonText = sender.titleLabel?.text
         var empty = outputStream.text?.isEmpty
