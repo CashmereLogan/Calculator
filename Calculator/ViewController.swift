@@ -27,18 +27,20 @@ class ViewController: UIViewController {
     let numbers = NSCharacterSet(charactersInString: "123456789")
     var opChar = ""
     
-    func operate(operatorToUse: String, numberToUse: Int){
+    func operate(operatorToUse: String, numberToUse: Int, previousNumber: Int){
         println("operatorToUse: \(operatorToUse) , numberToUse: \(numberToUse) , answerInt: \(answerInt)")
         if (operatorToUse == "-"){
             println("answerBox.text = \(answerBox.text!.toInt()!)")
-            answerInt = answerBox.text!.toInt()! - numberToUse
-            println("AnswerInt is: \(answerInt)")
+            println("AnswerInt1 is: \(answerInt)")
+            println("Previous Number: \(previousNumber), Number To Use: \(numberToUse)")
+            answerInt = previousNumber - numberToUse
+            println("AnswerInt2 is: \(answerInt)")
         }else if (operatorToUse == "+"){
-            answerInt = answerBox.text!.toInt()! + numberToUse
+            answerInt = answerInt + numberToUse
         }else if (operatorToUse == "*"){
-            answerInt = answerBox.text!.toInt()! * numberToUse
+            answerInt = answerInt * numberToUse
         }else if (operatorToUse == "/"){
-            answerInt = answerBox.text!.toInt()! / numberToUse
+            answerInt = answerInt / numberToUse
         }else{
             answerInt = numberToUse
         }
@@ -68,14 +70,15 @@ class ViewController: UIViewController {
 
         for x in stringArray{
             if let int = x.toInt() {
-                operate(opChar, numberToUse: x.toInt()!)
-
+                println("StringCount: \(stringArray[count])")
+                operate(opChar, numberToUse: x.toInt()!, previousNumber: stringArray[count].toInt()!)
                 //One function gets expression ready, other calculates it based on number added after operator
                 //answerInt += int
                 //where I need to call calculation
             }
+            
         }
-        
+        count++
         answerBox.text = "\(answerInt)"
         println("\(answerInt)")
         println("Answer int is now 0")
@@ -93,10 +96,13 @@ class ViewController: UIViewController {
             outputStream.text = buttonText!
         }
         
-        if (buttonText != "+" && buttonText != "-" && buttonText != "/" && buttonText != "*"){
+        let nsString = outputStream.text! as NSString
+        stringArray = nsString.componentsSeparatedByCharactersInSet(operators) as! [String]
+        
+        if (buttonText != "+" && buttonText != "-" && buttonText != "/" && buttonText != "*" && (stringArray.endIndex)-1 > 0){
             recalculate()
         }else{
-            i = 1
+            answerBox.text = "\(stringArray[0])"
         }
         
     
