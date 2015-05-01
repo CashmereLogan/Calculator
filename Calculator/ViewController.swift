@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     var opChar = ""
     
     func operate(operatorToUse: String, numberToUse: Int){
+        println("operatorToUse: \(operatorToUse) , numberToUse: \(numberToUse) , answerInt: \(answerInt)")
         if (operatorToUse == "+"){
             answerInt += numberToUse
         }else if (operatorToUse == "-"){
@@ -68,6 +69,7 @@ class ViewController: UIViewController {
         }
         
         answerBox.text = "\(answerInt)"
+        println("Answer int is now 0")
         answerInt = 0
     }
     
