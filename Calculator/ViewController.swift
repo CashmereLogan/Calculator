@@ -34,11 +34,11 @@ class ViewController: UIViewController {
             answerInt = answerBox.text!.toInt()! - numberToUse
             println("AnswerInt is: \(answerInt)")
         }else if (operatorToUse == "+"){
-            answerInt += numberToUse
+            answerInt = answerBox.text!.toInt()! + numberToUse
         }else if (operatorToUse == "*"){
-            answerInt == answerInt * numberToUse
+            answerInt = answerBox.text!.toInt()! * numberToUse
         }else if (operatorToUse == "/"){
-            answerInt == answerInt / numberToUse
+            answerInt = answerBox.text!.toInt()! / numberToUse
         }else{
             answerInt = numberToUse
         }
