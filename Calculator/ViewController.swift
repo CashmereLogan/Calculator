@@ -29,14 +29,16 @@ class ViewController: UIViewController {
     
     func operate(operatorToUse: String, numberToUse: Int){
         println("operatorToUse: \(operatorToUse) , numberToUse: \(numberToUse) , answerInt: \(answerInt)")
-        if (operatorToUse == "+"){
+        if (operatorToUse == "-"){
+            println("answerBox.text = \(answerBox.text!.toInt()!)")
+            answerInt = answerBox.text!.toInt()! - numberToUse
+            println("AnswerInt is: \(answerInt)")
+        }else if (operatorToUse == "+"){
             answerInt += numberToUse
-        }else if (operatorToUse == "-"){
-            answerInt == answerInt - numberToUse
         }else if (operatorToUse == "*"){
-            answerInt *= numberToUse
+            answerInt == answerInt * numberToUse
         }else if (operatorToUse == "/"){
-            answerInt /= numberToUse
+            answerInt == answerInt / numberToUse
         }else{
             answerInt = numberToUse
         }
@@ -59,10 +61,15 @@ class ViewController: UIViewController {
                 opChar = "/"
             }
         }
-        
+        var i = 1
+        var count = 0
+        let testString = outputStream.text! as NSString
+        let length = testString.length - 1
+
         for x in stringArray{
             if let int = x.toInt() {
                 operate(opChar, numberToUse: x.toInt()!)
+
                 //One function gets expression ready, other calculates it based on number added after operator
                 //answerInt += int
                 //where I need to call calculation
@@ -70,11 +77,12 @@ class ViewController: UIViewController {
         }
         
         answerBox.text = "\(answerInt)"
+        println("\(answerInt)")
         println("Answer int is now 0")
         answerInt = 0
     }
     
-    
+    var i = 0
     @IBAction func buttonPress(sender: UIButton) {
         var buttonText = sender.titleLabel?.text
         var empty = outputStream.text?.isEmpty
@@ -85,7 +93,12 @@ class ViewController: UIViewController {
             outputStream.text = buttonText!
         }
         
-        recalculate()
+        if (buttonText != "+" && buttonText != "-" && buttonText != "/" && buttonText != "*"){
+            recalculate()
+        }else{
+            i = 1
+        }
+        
     
     }
     
